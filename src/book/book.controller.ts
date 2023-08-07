@@ -12,10 +12,10 @@ export class BookController {
   }
 
   @Get(':id')
-  getBookById(
+  async getBookById(
     @Param('id', ParseIntPipe) bookId: number,
   ) {
-    return this.bookService.getBookById(
+    return await this.bookService.getBookById(
       bookId,
     );
   }

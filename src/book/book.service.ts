@@ -26,7 +26,13 @@ export class BookService {
       const book = await this.prisma.book.create({
         data: dto,
       });
-      return book;
+      // Check if the object was created
+      if (book) {
+        return book;
+      } else {
+        // Handle the case when the object was not created
+        throw new Error('Book creation failed.');
+      }
     } catch (error) {
       throw new HttpException(
         {
@@ -40,4 +46,6 @@ export class BookService {
       );
     }
   }
+
+  
 }
