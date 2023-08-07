@@ -1,6 +1,6 @@
 import { BookDto } from './dto';
 import { Injectable, HttpException, HttpStatus,NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
