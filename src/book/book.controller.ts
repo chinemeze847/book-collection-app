@@ -1,5 +1,5 @@
-import { BookDto } from './dto/book.dto';
-import { Body, Controller, Get, Param, ParseIntPipe, Post,HttpException,HttpStatus } from '@nestjs/common';
+import { BookDto, UpdateBookDto } from './dto';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Patch } from '@nestjs/common';
 import { BookService } from './book.service';
 
 @Controller('books')
@@ -33,6 +33,15 @@ export class BookController {
       } 
   }
 
-
+  @Patch(':id')
+  updateBookmarkById(
+    @Param('id', ParseIntPipe) bookId: number,
+    @Body() dto: UpdateBookDto,
+  ) {
+    return this.bookService.updateBookById(
+      bookId,
+      dto,
+    );
+  }
 
 }

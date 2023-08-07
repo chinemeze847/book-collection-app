@@ -31,7 +31,7 @@ export class BookService {
         return book;
       } else {
         // Handle the case when the object was not created
-        throw new Error('Book creation failed.');
+        throw new HttpException('Book creation failed.', HttpStatus.NOT_FOUND);
       }
     } catch (error) {
       throw new HttpException(
@@ -47,5 +47,38 @@ export class BookService {
     }
   }
 
-  
+  async updateBookById(bookId: number, dto: BookDto) {
+    // get the book by id
+    const book = await this.prisma.book.findUnique({
+      where: {
+        id: bookId,
+      },
+    });
+
+    if (book) {
+      try {
+        return this.prisma.book.update({
+          where: {
+            id: bookId,
+          },
+          data: {
+            ...dto,
+          },
+        });
+      } catch (error) {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            error: 'The ISBN number must be unique',
+          },
+          HttpStatus.BAD_REQUEST,
+          {
+            cause: error,
+          },
+        );
+      }
+    } else {
+      throw new HttpException('Book Not Found', HttpStatus.NOT_FOUND);
+    }
+  }
 }
