@@ -1,4 +1,14 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { BookDto } from './dto';
+import { BookService } from './book.service';
 
-@Controller('book')
-export class BookController {}
+@Controller('books')
+export class BookController {
+  constructor(private bookService : BookService){}
+
+  @Get()
+  getBooks() {
+    return this.bookService.getAllBooks();
+  }
+
+}
