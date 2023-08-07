@@ -17,7 +17,7 @@ model Book {
 
   title String
   author String
-  isbn String
+  isbn String        @unique
   category String
   description String?
   price Int
