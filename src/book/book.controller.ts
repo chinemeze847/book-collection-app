@@ -1,16 +1,25 @@
 import { BookDto, UpdateBookDto } from './dto';
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Patch, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { BookService } from './book.service';
 
 @Controller('books')
 export class BookController {
   constructor(private bookService : BookService){}
 
+  /**
+   * This method gets all books
+   * @returns all books
+   */
   @Get()
   getBooks() {
     return this.bookService.getAllBooks();
   }
 
+  /**
+   * Gets book by id
+   * @param bookId the id of the book to be gotten
+   * @returns the specific book
+   */
   @Get(':id')
   async getBookById(
     @Param('id', ParseIntPipe) bookId: number,
@@ -20,8 +29,13 @@ export class BookController {
     );
   }
 
+  /**
+   * creates book
+   * @param dto 
+   * @returns created book
+   */
   @Post()
-  createBookmark(
+  createBook(
     @Body() dto: BookDto,
   ) {
     try {
@@ -33,8 +47,14 @@ export class BookController {
       } 
   }
 
+  /**
+   * updates the book
+   * @param bookId 
+   * @param dto 
+   * @returns updated book
+   */
   @Patch(':id')
-  updateBookmarkById(
+  updateBookById(
     @Param('id', ParseIntPipe) bookId: number,
     @Body() dto: UpdateBookDto,
   ) {
@@ -44,4 +64,20 @@ export class BookController {
     );
   }
 
+  /**
+   * Deletes a book
+   * @param bookId the id of the book
+   * @returns 
+   */
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete(':id')
+  deleteBookById(
+    @Param('id', ParseIntPipe) bookId: number,
+  ) {
+    return this.bookService.deleteBookById(
+      bookId,
+    );
+  }
 }
+
+
