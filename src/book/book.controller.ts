@@ -1,4 +1,5 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { BookDto } from './dto/book.dto';
+import { Body, Controller, Get, Param, ParseIntPipe, Post,HttpException,HttpStatus } from '@nestjs/common';
 import { BookService } from './book.service';
 
 @Controller('books')
@@ -19,6 +20,19 @@ export class BookController {
     );
   }
 
-  
+  @Post()
+  createBookmark(
+    @Body() dto: BookDto,
+  ) {
+    try {
+        return this.bookService.createBook(
+            dto
+          );
+      } catch (error) { 
+        return error;
+      } 
+  }
+
+
 
 }
