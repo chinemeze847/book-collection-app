@@ -1,4 +1,4 @@
-import { BookDto } from './dto';
+import { BookDto, UpdateBookDto } from './dto';
 import { Injectable, HttpException, HttpStatus,NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
@@ -82,7 +82,7 @@ export class BookService {
   /**
    * This updates the bood by id
    */
-  async updateBookById(bookId: number, dto: BookDto) {
+  async updateBookById(bookId: number, dto: UpdateBookDto) {
     try {
         // Get the book by id
         const book = await this.prisma.book.findUnique({

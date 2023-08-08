@@ -4,25 +4,25 @@ export class UpdateBookDto {
 
     @IsString()
     @IsOptional()
-    title
+    title? : string;
 
     @IsString()
     @IsOptional()
-    author
+    author? : string;
 
     @IsString()
     @IsOptional()
-    isbn
+    isbn? : string;
 
     @IsString()
     @IsOptional()
-    category
+    category? : string;
 
     @IsString()
     @IsOptional()
-    description
+    description? : string;
 
     @IsNumber()
     @IsOptional()
-    price
+    price? : number;
   }

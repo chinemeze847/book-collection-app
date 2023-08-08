@@ -1,18 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { AppModule } from './../src/app.module';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../src/prisma/prisma.service';
 import * as pactum from 'pactum';
-import { BookDto, UpdateBookDto } from 'src/book/dto';
+import { BookDto, UpdateBookDto } from '../src/book/dto';
 
 describe('App (e2e)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
 
-  beforeEach(async () => {
-    let app: INestApplication;
-    let prisma: PrismaService;
-  
     beforeAll(async () => {
       const moduleRef =
         await Test.createTestingModule({
@@ -34,8 +30,6 @@ describe('App (e2e)', () => {
         'http://localhost:3000',
       );
     });
-  
-  }); 
 
   afterAll(() => {
     app.close();
@@ -71,16 +65,14 @@ describe('App (e2e)', () => {
     });
   });
 
-  describe('Edit user', () => {
-    it('should edit user', () => {
-      const dto: UpdateBookDto = {
+  describe('update book', () => {
+    it('should update book', () => {
+      const dto : UpdateBookDto = {
         author: "pillar henry",
-        title: "",
-        
       };
       return pactum
         .spec()
-        .patch('/books')
+        .patch('/books/1')
         .withBody(dto)
         .expectStatus(200)
         .expectBodyContains(dto.author)
@@ -97,6 +89,5 @@ describe('Delete book by id', () => {
       .expectStatus(204);
   });
 });
-
 
 });
